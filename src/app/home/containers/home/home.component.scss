@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex-grow:  1;
+}
+
+.content {
+  width: 100%;
+  height:  100%;
+}
+
+.debug {
+  &.start {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: red;
+  }
+}
+
+.gesture-confirmation {
+  width: 100%;
+
+  .notice {
+    margin: 0;
+    font-size: 10rem;
+    text-align: center;
+  }
+}
