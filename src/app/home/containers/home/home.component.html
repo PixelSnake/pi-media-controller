@@ -5,11 +5,15 @@
      (mousedown)="onMouseDown($event)"
      (mousemove)="onMouseMove($event)"
      (mouseup)="onMouseUp($event)">
-  <div *ngIf="start" class="debug start" [style.left.px]="start.x" [style.top.px]="start.y"></div>
+  <!--<div *ngIf="start" class="debug start" [style.left.px]="start.x" [style.top.px]="start.y"></div>-->
 
-  <div *ngIf="finishedGesture" class="gesture-confirmation flex flex-column">
+  <div class="background-container">
+    <div class="background" [style.backgroundImage]="'url(assets/background-default.jpg)'"></div>
+  </div>
+
+  <div class="gesture-confirmation flex flex-column" [class.show]="showGestureConfirmation">
     <div class="flex flex-grow"></div>
-    <p class="notice"><app-icon [icon]="getGestureIcon(finishedGesture)"></app-icon></p>
+    <p *ngIf="finishedGesture" class="notice"><app-icon [icon]="getGestureIcon(finishedGesture)"></app-icon></p>
     <div class="flex flex-grow"></div>
   </div>
 </div>

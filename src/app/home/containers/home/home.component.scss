@@ -5,8 +5,10 @@
 }
 
 .content {
+  overflow: hidden;
   width: 100%;
   height:  100%;
+  touch-action: none;
 }
 
 .debug {
@@ -19,12 +21,40 @@
   }
 }
 
+.background-container {
+  overflow: hidden;
+  z-index: -1;
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  .background {
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-size: cover;
+
+    filter: blur(4px);
+    transform: scale(1.1);
+  }
+}
+
 .gesture-confirmation {
   width: 100%;
+  opacity: 0;
+
+  transition: opacity .3s;
+
+  &.show {
+    opacity: 1;
+  }
 
   .notice {
+    color: white;
     margin: 0;
-    font-size: 10rem;
+    font-size: 6rem;
     text-align: center;
   }
 }

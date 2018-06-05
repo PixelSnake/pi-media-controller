@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Vector } from '../../../shared/types/vector'
 import { GestureInformation } from '../../../shared/types/gestureInformation'
+import { ApiService } from '../../../shared/services/api.service'
 
 @Component({
   selector: 'app-home',
@@ -9,17 +10,18 @@ import { GestureInformation } from '../../../shared/types/gestureInformation'
 })
 export class HomeComponent implements OnInit {
   static readonly minMagnitude = 100
-  static readonly sectionTilt = 45
-  static readonly sections = 4
+  static readonly sectionTilt = 22.5
+  static readonly sections = 8
 
   start: Vector
   lastPosition: Vector
   currentGesture: GestureInformation
 
+  showGestureConfirmation = false
   finishedGesture: GestureInformation
   gestureConfirmationTimeout: any
 
-  constructor() {
+  constructor(private apiService: ApiService) {
   }
 
   ngOnInit() {
@@ -105,29 +107,57 @@ export class HomeComponent implements OnInit {
   }
 
   finishGesture(gesture: GestureInformation) {
+    this.apiService.postAction(
+      this.getGestureType(gesture.section),
+      this.getGesture(gesture.section),
+      this.getGesturePayload(gesture.section)
+    ).subscribe()
+
+    this.showGestureConfirmation = true
     this.finishedGesture = gesture
     if (this.gestureConfirmationTimeout) {
       clearTimeout(this.gestureConfirmationTimeout)
     }
-    this.gestureConfirmationTimeout = setTimeout(() => this.finishedGesture = null, 2000)
+    this.gestureConfirmationTimeout = setTimeout(() => this.showGestureConfirmation = false, 2000)
   }
 
-  getGestureDescription(gesture: GestureInformation): string {
-    const descriptions = {
-      0: 'Previous',
-      1: 'Pause',
-      2: 'Next',
-      3: 'Continue'
+  getGestureType(section: number): string {
+    const types = {
+      0: 'key',
+      1: 'command',
+      3: 'command',
+      4: 'key',
+      6: 'key'
     }
-    return descriptions[gesture.section]
+    return types[section]
+  }
+
+  getGesturePayload(section: number): any {
+    const payloads = {
+      1: '1',
+      3: '2'
+    }
+    return payloads[section]
+  }
+
+  getGesture(section: number): string {
+    const gestures = {
+      0: 'audio_next',
+      1: 'endpointController',
+      3: 'endpointController',
+      4: 'audio_prev',
+      6: 'audio_pause'
+    }
+    return gestures[section]
   }
 
   getGestureIcon(gesture: GestureInformation): string {
     const descriptions = {
-      0: 'backward',
-      1: 'pause',
-      2: 'forward',
-      3: 'play'
+      0: 'forward',
+      1: 'headphones',
+      3: 'volume-up',
+      4: 'backward',
+      6: 'play'
     }
     return descriptions[gesture.section]
   }
