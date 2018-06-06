@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+
+  background: black;
+}
+
+.notice {
+  text-align: center;
+  color: #1ed760;
+  font-weight: 900;
+  font-size: 2rem;
+}

@@ -1,8 +1,7 @@
-const actionRoutes = require('./action')
-
 module.exports.register = server => {
   const routes = [
-    ...actionRoutes
+    ...require('./action'),
+    ...require('./spotify')
   ]
 
   routes.forEach(r => server.route(r))

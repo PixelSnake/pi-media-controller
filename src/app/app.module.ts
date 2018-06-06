@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router'
 import { AppRoutingModule } from './app-routing.module'
 import { HomeModule } from './home/home.module'
+import { SettingsModule } from './settings/settings.module'
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { HomeModule } from './home/home.module'
 
     AppRoutingModule,
 
-    HomeModule
+    HomeModule,
+    SettingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

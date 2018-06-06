@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IconComponent } from './components/icon/icon.component';
 import { ApiService } from './services/api.service'
 import { HttpClientModule } from '@angular/common/http'
+import { SpotifyService } from './services/spotify.service'
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http'
     IconComponent
   ],
   providers: [
-    ApiService
+    ApiService,
+    SpotifyService
   ]
 })
 export class SharedModule { }
