@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../environments/environment'
-import { tap } from 'rxjs/operators'
+import { catchError, tap } from 'rxjs/operators'
 import { SpotifyCurrentlyPlayingContext } from '../types/spotifyCurrentlyPlayingContext'
+import { errorHandler } from '@angular/platform-browser/src/browser'
+import { Observable, ObservableInput } from 'rxjs/Observable'
 
 @Injectable()
 export class SpotifyService {
@@ -16,7 +18,7 @@ export class SpotifyService {
 
   constructor(private http: HttpClient) {
     const accessToken = localStorage.getItem('accessToken')
-    const refreshToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
 
     if (accessToken && refreshToken) {
       this.accessToken = accessToken
@@ -51,12 +53,34 @@ export class SpotifyService {
       )
   }
 
+  refresh() {
+    return this.http
+      .get(`${environment.apiBaseUrl}/spotify/token/refresh?refresh_token=${ this.refreshToken }`)
+      .pipe(
+        tap((res: any) => {
+          this.accessToken = res.access_token
+
+          localStorage.setItem('accessToken', this.accessToken)
+          localStorage.setItem('refreshToken', this.refreshToken)
+
+          this._isConnected = true
+        })
+      )
+  }
+
   getCurrentlyPlaying() {
     return this.http.get<SpotifyCurrentlyPlayingContext>(`${SpotifyService.apiBaseUrl}/me/player`, {
       headers: {
         Authorization: `Bearer ${this.accessToken}`
       }
-    })
+    }).pipe(catchError(this.errorHandler.bind(this)))
+  }
+
+  private errorHandler(err: any, caught: Observable<any>): ObservableInput<any> {
+    if (err.error.error.status === 401) {
+      this.refresh().subscribe()
+    }
+    return caught
   }
 
   get isConnected() {
