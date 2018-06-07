@@ -12,6 +12,6 @@ export const environment = {
     clientId: '6e45c95d2b9f439c81131bbbce0da318',
     clientSecret: '8b303ff71c144b269b4d57ac1c06288a',
     redirectUri: 'http://192.168.1.101:4200/settings/spotify-callback',
-    scopes: 'user-read-private user-read-email'
+    scopes: 'user-read-private user-read-email user-read-playback-state'
   }
 };

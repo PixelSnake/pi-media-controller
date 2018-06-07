@@ -1,19 +1,21 @@
-<div class="content flex flex-grow"
-     (touchstart)="onTouchStart($event)"
-     (touchmove)="onTouchMove($event)"
-     (touchend)="onTouchEnd($event)"
-     (mousedown)="onMouseDown($event)"
-     (mousemove)="onMouseMove($event)"
-     (mouseup)="onMouseUp($event)">
-  <!--<div *ngIf="start" class="debug start" [style.left.px]="start.x" [style.top.px]="start.y"></div>-->
+<app-gesture-receiver>
+  <div class="content flex flex-column">
+    <div class="background" [class.blur]="!!currentlyPlaying" [style.backgroundImage]="background"></div>
+    <div class="flex flex-row toolbar">
+      <button appButton class="icon" routerLink="/settings">
+        <app-icon icon="cog"></app-icon>
+      </button>
+    </div>
 
-  <div class="background-container">
-    <div class="background" [style.backgroundImage]="'url(assets/background-default.jpg)'"></div>
-  </div>
-
-  <div class="gesture-confirmation flex flex-column" [class.show]="showGestureConfirmation">
+    <div *ngIf="currentlyPlaying" class="flex flex-row">
+      <div class="flex flex-grow"></div>
+      <div class="cover" [style.backgroundImage]="background"></div>
+      <div class="flex flex-grow"></div>
+    </div>
+    <div *ngIf="currentlyPlaying" class="song-info">
+      <p class="title">{{ currentlyPlaying.name }}</p>
+      <p class="info">{{ artists }} - {{ currentlyPlaying.album.name }}</p>
+    </div>
     <div class="flex flex-grow"></div>
-    <p *ngIf="finishedGesture" class="notice"><app-icon [icon]="getGestureIcon(finishedGesture)"></app-icon></p>
-    <div class="flex flex-grow"></div>
   </div>
-</div>
+</app-gesture-receiver>

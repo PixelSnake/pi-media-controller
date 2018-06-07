@@ -1,0 +1,17 @@
+<div class="content flex flex-grow"
+     (touchstart)="onTouchStart($event)"
+     (touchmove)="onTouchMove($event)"
+     (touchend)="onTouchEnd($event)"
+     (mousedown)="onMouseDown($event)"
+     (mousemove)="onMouseMove($event)"
+     (mouseup)="onMouseUp($event)">
+  <!--<div *ngIf="start" class="debug start" [style.left.px]="start.x" [style.top.px]="start.y"></div>-->
+
+  <div class="gesture-confirmation flex flex-column" [class.show]="showGestureConfirmation">
+    <div class="flex flex-grow"></div>
+    <p *ngIf="finishedGesture" class="notice"><app-icon [icon]="getGestureIcon(finishedGesture)"></app-icon></p>
+    <div class="flex flex-grow"></div>
+  </div>
+
+  <ng-content></ng-content>
+</div>

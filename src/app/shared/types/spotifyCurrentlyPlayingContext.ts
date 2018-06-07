@@ -1,5 +1,6 @@
+import { SpotifyCurrentlyPlayingContextItem } from './spotifyCurrentlyPlayingContextItem'
+
 export interface SpotifyCurrentlyPlayingContext {
-  timestamp: string
   device: {
     id: string
     is_active: boolean
@@ -8,11 +9,11 @@ export interface SpotifyCurrentlyPlayingContext {
     type: string
     volume_percent: number
   }
-  progress_ms: string
-  is_playing: boolean
-  item: any
+
   shuffle_state: boolean
   repeat_state: string
+  timestamp: string
+
   context: {
     external_urls: {
       spotify: string
@@ -21,4 +22,8 @@ export interface SpotifyCurrentlyPlayingContext {
     type: string
     uri: string
   }
+
+  progress_ms: string
+  is_playing: boolean
+  item: SpotifyCurrentlyPlayingContextItem
 }

@@ -10,12 +10,19 @@ export class SpotifyService {
   public static authBaseUrl = 'https://accounts.spotify.com'
   public static apiBaseUrl = 'https://api.spotify.com/v1'
 
-  private static accessToken: string
-  private static refreshToken: string
-
+  private accessToken: string
+  private refreshToken: string
   private _isConnected = false
 
   constructor(private http: HttpClient) {
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('accessToken')
+
+    if (accessToken && refreshToken) {
+      this.accessToken = accessToken
+      this.refreshToken = refreshToken
+      this._isConnected = true
+    }
   }
 
   authorize() {
@@ -33,15 +40,23 @@ export class SpotifyService {
       .get(`${environment.apiBaseUrl}/spotify/token?code=${code}`)
       .pipe(
         tap((res: any) => {
-          SpotifyService.accessToken = res.access_token
-          SpotifyService.refreshToken = res.refresh_token
+          this.accessToken = res.access_token
+          this.refreshToken = res.refresh_token
+
+          localStorage.setItem('accessToken', this.accessToken)
+          localStorage.setItem('refreshToken', this.refreshToken)
+
           this._isConnected = true
         })
       )
   }
 
   getCurrentlyPlaying() {
-    return this.http.get<SpotifyCurrentlyPlayingContext>(`${SpotifyService.apiBaseUrl}/me/player`)
+    return this.http.get<SpotifyCurrentlyPlayingContext>(`${SpotifyService.apiBaseUrl}/me/player`, {
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`
+      }
+    })
   }
 
   get isConnected() {

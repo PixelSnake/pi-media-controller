@@ -1,0 +1,10 @@
+[appButton] {
+  outline: none;
+
+  &.icon {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 3rem;
+  }
+}
