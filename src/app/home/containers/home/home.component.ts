@@ -6,6 +6,7 @@ import { SpotifyService } from '../../../shared/services/spotify.service'
 import { SpotifyArtist } from '../../../shared/types/spotifyArtist'
 import { DomSanitizer } from '@angular/platform-browser'
 import { SpotifyCurrentlyPlayingContextItem } from '../../../shared/types/spotifyCurrentlyPlayingContextItem'
+import { SpotifyCurrentlyPlayingContext } from '../../../shared/types/spotifyCurrentlyPlayingContext'
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
 
   pollForUpdates() {
     this.spotify.getCurrentlyPlaying()
-      .subscribe(currentlyPlaying => this.currentlyPlaying = currentlyPlaying.item)
+      .subscribe((currentlyPlaying: SpotifyCurrentlyPlayingContext) => this.currentlyPlaying = currentlyPlaying.item)
   }
 
   get background() {
