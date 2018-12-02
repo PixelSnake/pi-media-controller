@@ -27,6 +27,18 @@ export class GestureReceiverComponent implements OnInit {
   ngOnInit() {
   }
 
+  onDragStart(e: DragEvent) {
+    this.started(new Vector(e.clientX, e.clientY))
+  }
+
+  onDragMove(e: DragEvent) {
+    this.moved(new Vector(e.clientX, e.clientY))
+  }
+
+  onDragEnd(e: DragEvent) {
+    this.ended(new Vector(e.clientX, e.clientY))
+  }
+
   onTouchStart(e: TouchEvent) {
     this.started(new Vector(e.touches[0].clientX, e.touches[0].clientY))
   }
@@ -40,18 +52,22 @@ export class GestureReceiverComponent implements OnInit {
   }
 
   onMouseDown(e: MouseEvent) {
+    console.log('down')
     this.started(new Vector(e.clientX, e.clientY))
   }
 
   onMouseMove(e: MouseEvent) {
+    console.log('move')
     this.moved(new Vector(e.clientX, e.clientY))
   }
 
   onMouseUp(e: MouseEvent) {
+    console.log('up')
     this.ended(new Vector(e.clientX, e.clientY))
   }
 
   private started(vec: Vector) {
+    console.log('started', vec)
     this.start = vec
   }
 
@@ -63,16 +79,17 @@ export class GestureReceiverComponent implements OnInit {
   }
 
   private ended(vec: Vector) {
+    console.log('ended', vec)
+
     const ab = vec.minus(this.start)
     if (ab.magnitude() < GestureReceiverComponent.minMagnitude) {
       this.start = null
+      console.log('too short')
       return
     }
 
     const gesture = this.getGestureInformation(vec)
-    if (gesture.magnitude > GestureReceiverComponent.minMagnitude) {
-      this.finishGesture(gesture)
-    }
+    this.finishGesture(gesture)
 
     this.start = null
     this.currentGesture = null
@@ -134,7 +151,7 @@ export class GestureReceiverComponent implements OnInit {
 
   getGesturePayload(section: number): any {
     const payloads = {
-      1: '1',
+      1: '0',
       3: '2'
     }
     return payloads[section]
