@@ -6,7 +6,7 @@ import { Vector } from '../../types/vector'
 @Component({
   selector: 'app-gesture-receiver',
   templateUrl: './gesture-receiver.component.html',
-  styleUrls: ['./gesture-receiver.component.scss']
+  styleUrls: ['./gesture-receiver.component.css']
 })
 export class GestureReceiverComponent implements OnInit {
   static readonly minMagnitude = 100

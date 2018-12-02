@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   // apiBaseUrl: 'http://localhost:4201'
-  apiBaseUrl: 'http://192.168.1.101:4201',
+  apiBaseUrl: 'http://192.168.1.104:4201',
 
   spotify: {
     clientId: '6e45c95d2b9f439c81131bbbce0da318',

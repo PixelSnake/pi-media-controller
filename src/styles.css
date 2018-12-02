@@ -1,4 +1,4 @@
-@import "./app/shared/shared.module";
+@import "./app/shared/shared.module.css";
 
 html, body {
   margin: 0;

@@ -5,7 +5,7 @@ import { SpotifyService } from '../../../shared/services/spotify.service'
 @Component({
   selector: 'app-spotify-callback',
   templateUrl: './spotify-callback.component.html',
-  styleUrls: ['./spotify-callback.component.scss']
+  styleUrls: ['./spotify-callback.component.css']
 })
 export class SpotifyCallbackComponent implements OnInit {
 
